@@ -31,12 +31,12 @@ class ExampleTest extends TestCase
     }
 
     /** @test */
-    public function user_can_read_thread_replies()
-    {
-        $reply = factory('App\Reply')
-            ->create(['thread_id' => $this->thread->id]);
+    // public function user_can_read_thread_replies()
+    // {
+    //     $reply = factory('App\Reply')
+    //         ->create(['thread_id' => $this->thread->id]);
 
-        $this->get('/threads/' . $this->thread->id)
-            ->assertSee($reply->body);   
-    }
+    //     $this->get('/threads/' . $this->thread->id)
+    //         ->assertSee($reply->body);   
+    // }
 }
