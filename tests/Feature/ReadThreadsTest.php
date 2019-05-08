@@ -26,7 +26,7 @@ class ExampleTest extends TestCase
     /** @test */
     public function user_can_view_single_thread()
     {
-        $this->get('/threads/' . $this->thread->id)
+        $this->get($this->thread->path())
             ->assertSee($this->thread->body);   
     }
 
@@ -36,7 +36,7 @@ class ExampleTest extends TestCase
     //     $reply = factory('App\Reply')
     //         ->create(['thread_id' => $this->thread->id]);
 
-    //     $this->get('/threads/' . $this->thread->id)
+    //     $this->get($this->thread->path())
     //         ->assertSee($reply->body);   
     // }
 }
