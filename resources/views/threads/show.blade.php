@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="margin-bottom:2rem">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
@@ -32,7 +32,7 @@
                 <form action="{{ $thread->path() . '/replies' }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <textarea name="body" id="body" class="form-control" placeholder="Having something to say?" rows="5"></textarea>
+                        <textarea name="body" id="body" class="form-control" placeholder="Having something to say?" rows="3"></textarea>
                     </div>
 
                     <button class="btn btn-primary">Post</button>

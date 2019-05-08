@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     public function addThread($thread)
     {
-        $this->Threads()->create($thread);
+        return $this->Threads()->create($thread);
     }
 
     /**
