@@ -22,11 +22,11 @@ class ParticipateInForum extends TestCase
     /** @test */
     public function authenticated_user_may_participate_in_forum_threads()
     {
-        $this->be($user = factory('App\User')->create());
+        $this->signIn();
 
-        $thread = factory('App\Thread')->create();
+        $thread = create('App\Thread');
 
-        $reply = factory('App\Reply')->make();
+        $reply = make('App\Reply');
 
         $this->post($thread->path().'/replies', $reply->toArray());
 
