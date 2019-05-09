@@ -44,6 +44,20 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
+    public function user_can_filter_threads_by_any_username()
+    {
+        $this->signIn(create('App\User' , ['name' => 'JoneDoe']));
+
+        $threadByJone = create('App\Thread' , ['user_id' => auth()->user()->id]);
+
+        $threadNotByJone = create('App\Thread');
+
+        $this->get('/threads?by=JoneDoe')
+            ->assertSee($threadByJone->title)
+                ->assertDontSee($threadNotByJone->title);
+    }
+
+    /** @test */
     // public function user_can_read_thread_replies()
     // {
     //     $reply = factory('App\Reply')
