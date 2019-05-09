@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use Illuminate\Http\Request;
+use App\Channel;
 
 class ThreadsController extends Controller
 {
@@ -14,11 +15,16 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Channel $channel
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel)
     {
-        $threads = Thread::orderBy('id', 'desc')->get();
+        if ($channel->exists) {
+            $threads = $channel->threads()->latest()->get();
+        } else {
+            $threads = Thread::orderBy('id', 'desc')->get();
+        }
 
         return view('threads.index' , compact('threads'));
     }
@@ -41,13 +47,19 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
+        request()->validate(array(
+            'title' => 'required',
+            'body' => 'required',
+            'channel_id' => 'required|exists:channels,id',
+        ));
+
         $thread = auth()->user()->addThread([
             'channel_id' => request('channel_id'),
             'title' => request('title'),
             'body' => request('body')
         ]);
 
-        return view('threads.show' , compact('thread'));
+        return redirect($thread->path());
     }
 
     /**
@@ -57,7 +69,7 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel_id ,Thread $thread)
+    public function show($channelId ,Thread $thread)
     {
         return view('threads.show' , compact('thread'));
     }

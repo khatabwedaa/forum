@@ -26,14 +26,51 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn(); 
 
-       $thread = create('App\Thread');
+       $thread = make('App\Thread');
 
-       $this->post('/threads' , $thread->toArray());
+       $responce = $this->post('/threads' , $thread->toArray());
 
-        $this->get($thread->path())
+        $this->get($responce->headers->get('Location'))
             ->assertSee($thread->title)
                 ->assertSee($thread->body);
     }
+
+    /** @test */
+    public function thread_requires_title()
+    {
+        $this->PublishThread(['title' => null])
+            ->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    public function thread_requires_body()
+    {
+        $this->PublishThread(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function thread_requires_valid_channel()
+    {
+        factory('App\Channel' , 2)->create();
+
+        $this->PublishThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->PublishThread(['channel_id' => 666])
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    public function PublishThread($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = make('App\Thread' , $overrides);
+    
+        return $this->post('/threads' , $thread->toArray());
+    }
+
+
     
 
 }
