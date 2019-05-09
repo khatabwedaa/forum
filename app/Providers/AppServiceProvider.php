@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         schema::defaultStringLength(191);  
         
-        view()->composer('layouts.app' , function ($view)
-        {
-            $view->with('channels' , Channel::all());
-        });
+        view()->share('channels' , Channel::all());
     }
 }

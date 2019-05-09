@@ -17,7 +17,7 @@ class CreateThreadsTest extends TestCase
         $this->get('/threads/create')    
             ->assertRedirect('/login');
 
-        $this->post('/threads')
+        $this->post(route('threads.store'))
                 ->assertRedirect('/login');
     }
 
@@ -28,7 +28,7 @@ class CreateThreadsTest extends TestCase
 
        $thread = make('App\Thread');
 
-       $responce = $this->post('/threads' , $thread->toArray());
+       $responce = $this->post(route('threads.store') , $thread->toArray());
 
         $this->get($responce->headers->get('Location'))
             ->assertSee($thread->title)
@@ -67,10 +67,6 @@ class CreateThreadsTest extends TestCase
 
         $thread = make('App\Thread' , $overrides);
     
-        return $this->post('/threads' , $thread->toArray());
+        return $this->post(route('threads.store') , $thread->toArray());
     }
-
-
-    
-
 }
