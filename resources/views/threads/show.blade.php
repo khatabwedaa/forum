@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center" style="margin-bottom:2rem">
+    <div class="row">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="margin-bottom:1rem;">
                 <div class="card-header">
                     <a href="#">{{ $thread->creator->name }}</a> Posted: 
 
@@ -15,20 +15,14 @@
                     <p>{{ $thread->body }}</p>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            @foreach ($thread->replies as $reply)
+            @foreach ($replies as $reply)
                 @include('threads.reply')
             @endforeach
-        </div>
-    </div>
 
-    @auth
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+            {{ $replies->links() }}
+
+            @auth
                 <form action="{{ $thread->path() . '/replies' }}" method="post">
                     @csrf
                     <div class="form-group">
@@ -37,10 +31,22 @@
 
                     <button class="btn btn-primary">Post</button>
                 </form>
+            @else
+                <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to share in this  discussion</p>
+            @endauth
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                        This thread was published {{ $thread->created_at->diffForHumans() }} by 
+                        <a href="#">{{ $thread->creator->name }}</a>, and currently 
+                        has {{ $thread->replies_count }} {{ str_plural('comment' , $thread->replies_count) }}.
+                    </p>                    
+                </div>
             </div>
         </div>
-    @else
-        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to share in this  discussion</p>
-    @endauth
+    </div>
 </div>
 @endsection
