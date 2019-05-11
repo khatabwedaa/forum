@@ -12,7 +12,7 @@
                     @csrf
 
                     <button type="submit" class="btn btn-sm btn-primary" {{ $reply->isFavorite() ? 'disabled' : '' }}>
-                        {{ $reply->favorites()->count() }} {{ str_plural('Favorite' , $reply->favorites()->count()) }}
+                        {{ $reply->favorites_count }} {{ str_plural('Favorite' , $reply->favorites_count) }}
                     </button>
                 </form>
             </div>
