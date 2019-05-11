@@ -10,11 +10,19 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    /**
+     * Relation with Thread
+     * 
+     * @return hasMany
+     */
     public function Threads()
     {
         return $this->hasMany(Thread::class);
     }
 
+    /**
+     * add new Thread
+     */
     public function addThread($thread)
     {
         return $this->Threads()->create($thread);

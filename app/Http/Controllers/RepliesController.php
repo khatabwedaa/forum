@@ -3,16 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
+    /**
+     * RepliesController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function store($channel_id ,Thread $thread)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Thread  $thread
+     * @param $channel_id
+     * @return back
+     */
+    public function store($channel_id , Thread $thread)
     {
         request()->validate(array(
             'body' => 'required',

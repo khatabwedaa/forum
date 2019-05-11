@@ -11,6 +11,11 @@ class Channel extends Model
         return 'slug';
     }
 
+    /**
+     * Relation with Thread
+     * 
+     * @return hasMany
+     */
     public function Threads()
     {
         return $this->hasMany(Thread::class);

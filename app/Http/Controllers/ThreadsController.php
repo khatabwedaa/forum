@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Channel;
-use App\Filters\ThreadFilters;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
@@ -113,6 +113,14 @@ class ThreadsController extends Controller
         //
     }
 
+    /**
+     * Get threads and filter it.
+     *
+     * @param $channel
+     * @param $filters
+     * 
+     * @return $threads
+     */
     protected function getThreads($channel , $filters)
     {
         $threads = Thread::latest()->filter($filters);

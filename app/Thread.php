@@ -27,21 +27,39 @@ class Thread extends Model
         return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
+    /**
+     * Relation with Reply
+     * 
+     * @return hasMany
+     */
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
 
+    /**
+     * Relation with User
+     * 
+     * @return belongsTo
+     */
     public function creator()
     {
         return $this->belongsTo(User::class , 'user_id');
     }
 
+    /**
+     * Relation with Channel
+     * 
+     * @return belongsTo
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class);
     }
 
+    /**
+     * add new reply to the thread
+     */
     public function addReply($reply)
     {
         $this->replies()->create($reply);

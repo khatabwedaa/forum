@@ -20,6 +20,13 @@ abstract class Filters
         $this->request = $request;
     }   
 
+    /**
+     * apply serach if has a filters.
+     * 
+     * @param Bulider
+     * 
+     * @return Builder
+     */
     public function apply($builder)
     {
         $this->builder = $builder;
@@ -33,6 +40,11 @@ abstract class Filters
         return $this->builder;
     }
 
+    /**
+     * get filters from the request .
+     * 
+     * @return $filters = []
+     */
     public function getFilters()
     {
         $filters = array_intersect(array_keys($this->request->all()), $this->filters);
