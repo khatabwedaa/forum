@@ -38,4 +38,9 @@ class Reply extends Model
             return $this->favorites()->create($attruibutes);  
         }
     }
+
+    public function isFavorite()
+    {
+        return $this->favorites()->where('user_id' , auth()->id())->exists(); 
+    }
 }

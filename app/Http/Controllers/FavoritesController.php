@@ -19,10 +19,12 @@ class FavoritesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Reply  $reply
-     * @return \Illuminate\Http\Response
+     * @return back
      */
     public function store(Reply $reply)
     {
-        return $reply->favorite();
+        $reply->favorite();
+
+        return back();
     }
 }
