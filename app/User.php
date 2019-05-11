@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     public function Threads()
     {
-        return $this->hasMany(Thread::class);
+        return $this->hasMany(Thread::class)->latest();
     }
 
     /**

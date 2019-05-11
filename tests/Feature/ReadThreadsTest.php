@@ -58,7 +58,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    // public function user_can_filter_threads_by_popularity()
+    // public function a_user_can_filter_threads_by_popularity()
     // {
     //     $threadWithTwoReplies = create('App\Thread');
     //     create('App\Reply' , ['thread_id' => $threadWithTwoReplies->id] , 2);
@@ -70,16 +70,17 @@ class ReadThreadsTest extends TestCase
 
     //     $response = $this->getJson('threads?popular=1')->json();
 
+    //     // dd($response);
     //     $this->assertEquals([3 , 2 , 0] , array_column($response , 'replies_count'));
     // }
 
     /** @test */
-    // public function user_can_read_thread_replies()
-    // {
-    //     $reply = factory('App\Reply')
-    //         ->create(['thread_id' => $this->thread->id]);
+    public function a_user_can_read_thread_replies()
+    {
+        $reply = factory('App\Reply')
+            ->create(['thread_id' => $this->thread->id]);
 
-    //     $this->get($this->thread->path())
-    //         ->assertSee($reply->body);   
-    // }
+        $this->get($this->thread->path())
+            ->assertSee($reply->body);   
+    }
 }
