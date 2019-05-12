@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top:2rem">
         <div class="col-md-8 offset-md-2">
             <div>
                 <h2>
@@ -19,7 +19,7 @@
                         <div class="level">
                             <span class="flex">
                                 <a href="{{ route('profile' , $thread->creator) }}">{{ $thread->creator->name }}</a> Posted: 
-                                {{ $thread->title }}
+                               <a href="{{ $thread->path() }}"> {{ $thread->title }}</a>
                             </span>
     
                             <span>{{ $thread->created_at->diffForHumans() }}</span>
