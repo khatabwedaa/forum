@@ -5,34 +5,23 @@
     <div class="row" style="margin-top:2rem">
         <div class="col-md-8 offset-md-2">
             <div>
-                <h2>
+                <h2 class="head-h">
                     {{ $profileUser->name }}
                     <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h2>
     
-                <hr>
+                <hr style="margin-bottom:2rem">
             </div>
             
-            @foreach ($threads as $thread)
-                <div class="card" style="margin-bottom:1rem;">
-                    <div class="card-header">
-                        <div class="level">
-                            <span class="flex">
-                                <a href="{{ route('profile' , $thread->creator) }}">{{ $thread->creator->name }}</a> Posted: 
-                               <a href="{{ $thread->path() }}"> {{ $thread->title }}</a>
-                            </span>
-    
-                            <span>{{ $thread->created_at->diffForHumans() }}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card-body">
-                        <p>{{ $thread->body }}</p>
-                    </div>
-                </div>
+            @foreach ($activities as $date => $activity)
+                <h3>{{ $date }}</h3><hr>
+                
+                @foreach ($activity as $record)
+                    @include("profiles.activities.{$record->type}" , ['activity' => $record])     
+                @endforeach
             @endforeach
     
-            {{ $threads->links() }}
+            {{-- {{ $threads->links() }} --}}
         </div>
     </div>
 </div>
