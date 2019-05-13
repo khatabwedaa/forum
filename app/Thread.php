@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordsActivity;
+    
     protected $guarded = [];
 
     protected $with = ['creator' , 'channel'];
@@ -24,6 +26,7 @@ class Thread extends Model
             $thread->replies()->delete();
         });
     }
+    
     /**
      * Fetch a path to the current thread.
      * 
