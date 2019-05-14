@@ -7,7 +7,6 @@
             <div>
                 <h2 class="head-h">
                     {{ $profileUser->name }}
-                    <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h2>
     
                 <hr style="margin-bottom:2rem">
