@@ -1,7 +1,9 @@
 @component('profiles.activities.activity')
     @slot('heading')
+        {{ $profileUser->name }} favorited <i class="fas fa-heart" style="color:#dd4b39;"></i> 
+        
         <a href="{{ $activity->subject->favorited->path() }}">
-            {{ $profileUser->name }} favorited a reply 
+            a reply 
         </a>
     @endslot
 
