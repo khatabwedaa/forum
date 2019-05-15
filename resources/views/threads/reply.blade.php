@@ -10,10 +10,12 @@
             <div>
                 <form action="/replies/{{ $reply->id }}/favorites" method="post">
                     @csrf
-
-                    <button type="submit" class="btn btn-sm btn-primary" {{ $reply->isFavorite() ? 'disabled' : '' }}>
-                        {{ $reply->favorites_count }} {{ str_plural('Favorite' , $reply->favorites_count) }}
-                    </button>
+                    
+                    @auth
+                        <button type="submit" class="btn btn-sm btn-primary" {{ $reply->isFavorite() ? 'disabled' : '' }}>
+                            {{ $reply->favorites_count }} {{ str_plural('Favorite' , $reply->favorites_count) }}
+                        </button>
+                    @endauth
                 </form>
             </div>
       </div>
@@ -22,4 +24,15 @@
     <div class="card-body">
         <p>{{ $reply->body }}</p>
     </div>
+
+    @can('update', $reply)
+        <div class="card-header">
+            <form action="/replies/{{ $reply->id }}" method="post">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    @endcan
 </div>

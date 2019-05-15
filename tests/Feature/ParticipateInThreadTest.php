@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ParticipateInForum extends TestCase
+class ParticipateInThreadTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -48,5 +48,33 @@ class ParticipateInForum extends TestCase
     
         $this->post($thread->path() . '/replies' , $reply->toArray())
             ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function unauthorized_cannot_delete_replies()
+    {
+        $this->withExceptionHandling();
+
+        $reply = create('App\Reply');
+
+        $this->delete("/replies/{$reply->id}")
+            ->assertRedirect('/login');
+
+        $this->signIn()
+            ->delete("/replies/{$reply->id}")
+                ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_delete_replies()
+    {
+        $this->signIn();
+
+        $reply = create('App\Reply' , ['user_id' => auth()->id()]);
+
+        $this->delete("/replies/{$reply->id}")
+            ->assertStatus(302);
+
+        $this->assertDatabaseMissing('replies' , ['id' => $reply->id]);
     }
 }
