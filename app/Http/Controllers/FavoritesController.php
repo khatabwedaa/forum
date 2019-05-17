@@ -28,4 +28,9 @@ class FavoritesController extends Controller
         return back()
             ->with('flash' , 'Favorite it');
     }
+
+    public function destroy(Reply $reply)
+    {
+        $reply->unfavorite();
+    }
 }

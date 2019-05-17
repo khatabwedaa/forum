@@ -10,13 +10,12 @@
 
                 <div>
                     @auth
-                        <form action="/replies/{{ $reply->id }}/favorites" method="post">
+                        <favorite-component :reply="{{ $reply }}"></favorite-component>
+                        {{-- <form action="/replies/{{ $reply->id }}/favorites" method="post">
                             @csrf
                         
-                            <button type="submit" class="btn btn-sm btn-primary" {{ $reply->isFavorite() ? 'disabled' : '' }}>
-                                {{ $reply->favorites_count }} {{ str_plural('Favorite' , $reply->favorites_count) }}
-                            </button>
-                        </form>
+                           
+                        </form> --}}
                     @endauth
                 </div>
             </div>
