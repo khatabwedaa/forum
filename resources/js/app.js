@@ -2,6 +2,7 @@
 import './bootstrap';
 
 Vue.component('flash-component', require('./components/FlashComponent.vue').default );
+Vue.component('reply-component', require('./components/ReplyComponent.vue').default );
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
