@@ -10,12 +10,7 @@
 
                 <div>
                     @auth
-                        <favorite-component :reply="{{ $reply }}"></favorite-component>
-                        {{-- <form action="/replies/{{ $reply->id }}/favorites" method="post">
-                            @csrf
-                        
-                           
-                        </form> --}}
+                        <favorite :reply="{{ $reply }}"></favorite>
                     @endauth
                 </div>
             </div>

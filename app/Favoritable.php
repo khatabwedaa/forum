@@ -4,6 +4,13 @@ namespace App;
 
 trait Favoritable 
 {
+    protected static function bootFavoritable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
+
     /**
      * Relation with Favorite
      * 
@@ -31,7 +38,7 @@ trait Favoritable
     {
         $attruibutes = ['user_id' => auth()->id()];
     
-        $this->favorites()->where($attruibutes)->delete();
+        $this->favorites()->where($attruibutes)->get()->each->delete();
     }
 
     public function isFavorited()

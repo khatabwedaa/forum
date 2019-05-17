@@ -1,9 +1,9 @@
 <script>
-import Favorite from './FavoriteComponent'
+import favorite from './FavoriteComponent'
     export default {
         props: ['attributes'],
 
-        components: { Favorite },
+        components: { favorite },
 
         data() {
             return {
