@@ -7,11 +7,12 @@
             <div class="col-md-8">
                 <div class="card" style="margin-bottom:1rem;">
                     <div class="card-header">
-                    <div class="level">
+                        <div class="level">
                             <span class="flex">
                                 <a href="{{ route('profile' , $thread->creator) }}">{{ $thread->creator->name }}</a> Posted: 
                                 {{ $thread->title }}
                             </span>
+                            
                             @can('update', $thread)
                                 <form action="{{ $thread->path() }}" method="post">
                                     @csrf
@@ -20,7 +21,7 @@
                                     <button class="btn btn-sm btn-danger">Delete Thread</button>
                                 </form>
                             @endcan                      
-                    </div>
+                        </div>
                     </div>
                     
                     <div class="card-body">
@@ -28,22 +29,12 @@
                     </div>
                 </div>
 
-                <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                <replies-component :data="{{ $thread->replies }}" 
+                    @removed="repliesCount--" @added="repliesCount++">
+                </replies-component>
 
                 {{-- {{ $replies->links() }} --}}
 
-                @auth
-                    <form action="{{ $thread->path() . '/replies' }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <textarea name="body" id="body" class="form-control" placeholder="Having something to say?" rows="3"></textarea>
-                        </div>
-
-                        <button class="btn btn-primary">Post</button>
-                    </form>
-                @else
-                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to share in this  discussion</p>
-                @endauth
             </div>
 
             <div class="col-md-4">

@@ -1,10 +1,10 @@
 <script>
-import Replies from '../components/RepliesComponent.vue'
+import RepliesComponent from '../components/RepliesComponent.vue'
 
     export default {
         props: ['iniRepliesCount'],
 
-        components: { Replies },
+        components: { RepliesComponent },
 
         data() {
             return {

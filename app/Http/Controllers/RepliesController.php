@@ -24,14 +24,14 @@ class RepliesController extends Controller
      */
     public function store($channel_id , Thread $thread)
     {
-        request()->validate(array(
-            'body' => 'required',
-        ));
+        request()->validate(['body' => 'required']);
         
-        $thread->addReply([
+        $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
         ]);
+
+        if(request()->expectsJson()) return $reply->load('owner');
 
         return back()
             ->with('flash' , 'Your reply has been left!');
