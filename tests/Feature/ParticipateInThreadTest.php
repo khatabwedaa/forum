@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ParticipateInThreadTest extends TestCase
@@ -22,7 +21,7 @@ class ParticipateInThreadTest extends TestCase
     }
 
     /** @test */
-    public function authenticated_user_may_participate_in_forum_threads()
+    public function an_authenticated_user_may_participate_in_forum_threads()
     {
         $this->signIn();
 
@@ -32,9 +31,7 @@ class ParticipateInThreadTest extends TestCase
 
         $this->post($thread->path().'/replies', $reply->toArray());
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
-
+        $this->assertDatabaseHas('replies' , ['body' => $reply->body]);
     }
 
     /** @test */

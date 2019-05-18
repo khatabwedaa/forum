@@ -58,33 +58,6 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    // public function a_user_can_filter_threads_by_popularity()
-    // {
-    //     $threadWithTwoReplies = create('App\Thread');
-    //     create('App\Reply' , ['thread_id' => $threadWithTwoReplies->id] , 2);
-
-    //     $threadWithThreeReplies = create('App\Thread');
-    //     create('App\Reply' , ['thread_id' => $threadWithThreeReplies->id] , 3);
-
-    //     $threadWithNotRepies = $this->thread;
-
-    //     $response = $this->getJson('threads?popular=1')->json();
-
-    //     // dd($response);
-    //     $this->assertEquals([3 , 2 , 0] , array_column($response , 'replies_count'));
-    // }
-
-    /** @test */
-    public function a_user_can_read_thread_replies()
-    {
-        $reply = factory('App\Reply')
-            ->create(['thread_id' => $this->thread->id]);
-
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);   
-    }
-
-    /** @test */
     public function a_user_can_request_all_replies_for_a_given_thread()
     {
         $thread = create('App\Thread');
