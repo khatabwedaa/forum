@@ -1,4 +1,4 @@
-<reply-component :attributes="{{ $reply }}" inline-template v-cloak>
+{{-- <reply-component :attributes="{{ $reply }}" inline-template v-cloak>
     <div id="reply-{{ $reply->id }}" class="card" style="margin-bottom:1rem;">
         <div class="card-header">
             <div class="level">
@@ -36,4 +36,4 @@
             </div>
         @endcan
     </div>
-</reply-component>
+</reply-component> --}}
