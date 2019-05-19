@@ -44,7 +44,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_filter_threads_by_any_username()
+    public function a_user_can_filter_threads_by_any_username()
     {
         $this->signIn(create('App\User' , ['name' => 'JoneDoe']));
 
@@ -55,6 +55,17 @@ class ReadThreadsTest extends TestCase
         $this->get('/threads?by=JoneDoe')
             ->assertSee($threadByJone->title)
                 ->assertDontSee($threadNotByJone->title);
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_those_that_are_unanswered()
+    {
+       $thread = create('App\Thread');
+       create('App\Reply' , ['thread_id' => $thread->id]);
+
+       $response = $this->getJson('threads?unanswered=1')->json();
+
+       $this->assertCount(2 , $response);
     }
 
     /** @test */

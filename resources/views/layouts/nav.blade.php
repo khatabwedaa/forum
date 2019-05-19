@@ -23,6 +23,7 @@
                                 @endauth
 
                                 <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
+                                <a class="dropdown-item" href="/threads?unanswered=1">Unanswered Threads</a>
                             </div>
                         </li>
 
