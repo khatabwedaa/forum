@@ -29,8 +29,8 @@
 
 
         <div class="card-header level" v-if="canUpdate"> 
-            <button class="btn btn-sm btn-secondary mr-1" @click="editing = true">Edit</button>
-            <button class="btn btn-sm btn-danger" @click="destroy">Delete</button>
+            <button class="btn btn-sm" @click="destroy"><i class="fas fa-trash" style="color:#ce2910"></i></button>
+            <button class="btn mr-1" @click="editing = true" style="color:#023689"><i class="far fa-edit"></i></button>
         </div>
     </div>
 </template>

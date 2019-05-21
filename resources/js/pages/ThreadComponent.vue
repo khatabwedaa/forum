@@ -1,10 +1,11 @@
 <script>
 import RepliesComponent from '../components/RepliesComponent.vue'
+import SubscribeButton from '../components/SubscribeButton.vue'
 
     export default {
         props: ['iniRepliesCount'],
 
-        components: { RepliesComponent },
+        components: { RepliesComponent , SubscribeButton },
 
         data() {
             return {
