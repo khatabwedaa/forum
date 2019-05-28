@@ -3,6 +3,7 @@ import './bootstrap';
 
 Vue.component('flash-component', require('./components/FlashComponent.vue').default);
 Vue.component('paginator-component', require('./components/PaginatorComponent.vue').default);
+Vue.component('user-notifications', require('./components/UserNotifiactions.vue').default);
 Vue.component('thread-component', require('./pages/ThreadComponent.vue').default);
 
 /**

@@ -2170,6 +2170,57 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      notifications: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get("/profiles/" + window.App.user.name + "/notifications").then(function (response) {
+      return _this.notifications = response.data;
+    });
+  },
+  // "/profiles/{$user->name}/notifications/" . $user->unreadNotifications->first()->id
+  methods: {
+    markAsRead: function markAsRead(notification) {
+      axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ThreadComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ThreadComponent.vue?vue&type=script&lang=js& ***!
@@ -56164,6 +56215,92 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", { staticClass: "nav-item dropdown" }, [
+    _c(
+      "a",
+      {
+        staticClass: "nav-link dropdown",
+        attrs: {
+          href: "#",
+          role: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("i", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.notifications.length,
+              expression: "notifications.length"
+            }
+          ],
+          staticClass: "fas fa-bell"
+        }),
+        _vm._v(" "),
+        _c("i", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.notifications.length == 0,
+              expression: "notifications.length == 0"
+            }
+          ],
+          staticClass: "far fa-bell"
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "dropdown-menu",
+        attrs: { "aria-labelledby": "navbarDropdown" }
+      },
+      _vm._l(_vm.notifications, function(notification) {
+        return _c("div", { key: notification.id }, [
+          _c("a", {
+            staticClass: "dropdown-item",
+            attrs: { href: notification.data.link },
+            domProps: { textContent: _vm._s(notification.data.message) },
+            on: {
+              click: function($event) {
+                return _vm.markAsRead(notification)
+              }
+            }
+          })
+        ])
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -68314,6 +68451,7 @@ __webpack_require__.r(__webpack_exports__);
 
 Vue.component('flash-component', __webpack_require__(/*! ./components/FlashComponent.vue */ "./resources/js/components/FlashComponent.vue").default);
 Vue.component('paginator-component', __webpack_require__(/*! ./components/PaginatorComponent.vue */ "./resources/js/components/PaginatorComponent.vue").default);
+Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifiactions.vue */ "./resources/js/components/UserNotifiactions.vue").default);
 Vue.component('thread-component', __webpack_require__(/*! ./pages/ThreadComponent.vue */ "./resources/js/pages/ThreadComponent.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -68895,6 +69033,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubscribeButton_vue_vue_type_template_id_f7ff20fe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubscribeButton_vue_vue_type_template_id_f7ff20fe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UserNotifiactions.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/UserNotifiactions.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserNotifiactions.vue?vue&type=template&id=a591a384& */ "./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384&");
+/* harmony import */ var _UserNotifiactions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserNotifiactions.vue?vue&type=script&lang=js& */ "./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UserNotifiactions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/UserNotifiactions.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserNotifiactions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./UserNotifiactions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserNotifiactions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UserNotifiactions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./UserNotifiactions.vue?vue&type=template&id=a591a384& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UserNotifiactions.vue?vue&type=template&id=a591a384&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserNotifiactions_vue_vue_type_template_id_a591a384___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
