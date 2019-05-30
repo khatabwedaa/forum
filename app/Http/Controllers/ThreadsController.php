@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Channel;
-use Carbon\Carbon;
+use App\Inspections\Spam;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 
@@ -48,13 +48,15 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Spam $spam)
     {
         request()->validate(array(
             'title' => 'required',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id',
         ));
+
+        $spam->detect(request('body'));
 
         $thread = auth()->user()->addThread([
             'channel_id' => request('channel_id'),

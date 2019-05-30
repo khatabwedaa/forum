@@ -27,7 +27,7 @@
             axios.get("/profiles/" + window.App.user.name + "/notifications")
                 .then(response => this.notifications = response.data);
         },
-// "/profiles/{$user->name}/notifications/" . $user->unreadNotifications->first()->id
+        
         methods: {
             markAsRead(notification) {
                 axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
