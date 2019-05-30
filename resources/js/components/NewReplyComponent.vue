@@ -1,5 +1,4 @@
 <template>
-
     <div>
        <div v-if="signedIn">
             <div class="form-group">
@@ -13,7 +12,6 @@
 
         <p class="text-center" v-else>Please <a href="/login">sign in</a> to share in this  discussion</p>
     </div>
-
 </template>
 
 <script>
@@ -32,7 +30,13 @@
 
         methods: {
             addReply() {
-                axios.post(location.pathname + '/replies' , { body: this.body })
+                axios.post(
+                    location.pathname + '/replies' , { 
+                        body: this.body 
+                    })
+                    .catch(error => {
+                        flash(error.response.data , 'danger');              
+                    })
                     .then(({data}) => {
                     this.body = '';
 
