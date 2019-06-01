@@ -45,7 +45,7 @@ class ParticipateInThreadTest extends TestCase
         $reply = make('App\Reply' , ['body' => null]);
     
         $this->post($thread->path() . '/replies' , $reply->toArray())
-            ->assertSessionHasErrors('body');
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -112,11 +112,28 @@ class ParticipateInThreadTest extends TestCase
         $thread = create('App\Thread');
 
         $reply = make('App\Reply', [
-            'body' => 'hello oneee!!'
+            'body' => 'hello oneee!'
         ]);
 
-        $this->expectException(\Exception::class);
+        $this->post($thread->path().'/replies', $reply->toArray())
+            ->assertStatus(422);
+    }
 
-        $this->post($thread->path().'/replies', $reply->toArray());
+    /** @test */
+    public function users_may_only_reply_a_maximum_of_once_pre_minute()
+    {
+        $this->signIn();
+
+        $thread = create('App\Thread');
+
+        $reply = make('App\Reply', [
+            'body' => 'add some reply..'
+        ]);
+
+        $this->post($thread->path() .'/replies', $reply->toArray())
+            ->assertStatus(201);
+
+        $this->post($thread->path() .'/replies', $reply->toArray())
+            ->assertStatus(422);
     }
 }
