@@ -9,10 +9,14 @@ use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
+    /**
+     * Create a new ThreadsController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except('index' , 'show');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,33 +86,11 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Delete the given thread.
      *
      * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Thread $thread)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Thread $thread)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @param  $channel
+     * @return mixed
      */
     public function destroy($channel , Thread $thread)
     {
@@ -124,7 +106,7 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Get threads and filter it.
+     * Fetch all relevant threads.
      *
      * @param $channel
      * @param $filters

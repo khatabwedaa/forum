@@ -9,24 +9,31 @@ use App\Http\Requests\CreatePostRequest;
 class RepliesController extends Controller
 {
     /**
-     * RepliesController constructor.
+     * Create a new RepliesController instance.
      */
     public function __construct()
     {
         $this->middleware('auth')->except('index');
     }
 
+    /**
+     * Fetch all relevant replies.
+     *
+     * @param  int $channelId
+     * @param  Thread $thread
+     */
     public function index($channelId , Thread $thread)
     {
         return $thread->replies()->paginate(15);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Persist a new reply.
      *
      * @param  Thread  $thread
-     * @param $channel_id
-     * @return back
+     * @param  int $channel_id
+     * @param CreatePostRequest $form
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function store($channel_id , Thread $thread , CreatePostRequest $form)
     {
@@ -36,21 +43,26 @@ class RepliesController extends Controller
         ])->load('owner');
     }
 
+    /**
+     * Update an existing reply.
+     *
+     * @param  Reply $reply
+     */
     public function update(Reply $reply)
     {
         $this->authorize('update' , $reply);
 
-        try {
-            request()->validate(['body' => 'required|spamfree']);            
+        request()->validate(['body' => 'required|spamfree']);            
 
-            $reply->update(request(['body']));
-        } catch (\Exception $e) {
-            return response(
-                'Sorry your reply can not saved at this time' , 422
-            );
-        }
+        $reply->update(request(['body']));
     }
 
+    /**
+     * Delete the given reply.
+     *
+     * @param  Reply $reply
+     * @return Illuminate\Database\Eloquent\Model
+     */
     public function destroy(Reply $reply)
     {
         $this->authorize('update' , $reply);

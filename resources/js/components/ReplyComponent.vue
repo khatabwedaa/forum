@@ -16,12 +16,14 @@
 
         <div class="card-body">
             <div v-if="editing">
-                <div class="form-group">
-                    <textarea name="body" class="form-control" v-model="body"></textarea>
-                </div>
+               <form @submit="update">
+                    <div class="form-group">
+                        <textarea name="body" class="form-control" v-model="body" required></textarea>
+                    </div>
 
-                <button type="submit" class="btn btn-sm btn-primary" @click="update">Update</button>
-                <button type="submit" class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                    <button class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
+               </form>
             </div>
 
             <div v-else v-text="body"></div>
@@ -74,11 +76,13 @@ import moment from 'moment';
                 }) 
                 .catch(error => {
                     flash(error.response.data , 'danger');              
-                });
+                })
+                .then(
+                    flash('Your reply Updated.')
+                );
 
                 this.editing = false;
 
-                flash('Updated!');
             },
 
             destroy() {

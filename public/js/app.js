@@ -1906,7 +1906,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (_ref) {
         var data = _ref.data;
         _this.body = '';
-        flash('Your reply has been added.');
+        flash('Your reply has been posted.');
 
         _this.$emit('created', data);
       });
@@ -2092,6 +2092,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2127,9 +2129,8 @@ __webpack_require__.r(__webpack_exports__);
         body: this.body
       }).catch(function (error) {
         flash(error.response.data, 'danger');
-      });
+      }).then(flash('Your reply Updated.'));
       this.editing = false;
-      flash('Updated!');
     },
     destroy: function destroy() {
       axios.delete('/replies/' + this.data.id);
@@ -56093,53 +56094,53 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
           ? _c("div", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.body,
-                      expression: "body"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { name: "body" },
-                  domProps: { value: _vm.body },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("form", { on: { submit: _vm.update } }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.body,
+                        expression: "body"
                       }
-                      _vm.body = $event.target.value
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "body", required: "" },
+                    domProps: { value: _vm.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.body = $event.target.value
+                      }
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-primary",
-                  attrs: { type: "submit" },
-                  on: { click: _vm.update }
-                },
-                [_vm._v("Update")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-link",
-                  attrs: { type: "submit" },
-                  on: {
-                    click: function($event) {
-                      _vm.editing = false
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-primary",
+                    attrs: { type: "submit" }
+                  },
+                  [_vm._v("Update")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-link",
+                    on: {
+                      click: function($event) {
+                        _vm.editing = false
+                      }
                     }
-                  }
-                },
-                [_vm._v("Cancel")]
-              )
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
             ])
           : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
       ]),
