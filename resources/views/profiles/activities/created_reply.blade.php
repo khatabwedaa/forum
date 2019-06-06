@@ -7,6 +7,6 @@
     @endslot
 
     @slot('body')
-        <p>{{ $activity->subject->body }}</p>                
+        <p>{!! $activity->subject->body !!}</p>                
     @endslot
 @endcomponent
