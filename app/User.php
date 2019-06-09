@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->Threads()->create($thread);
     }
 
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset($avatar ? 'storage/' .  $avatar: 'images/avatars/default.png');
+    }
+
     public function getRouteKeyName()
     {
         return 'name';

@@ -33,6 +33,7 @@
         .level { display: flex; align-items: center; }
         .flex { flex: 1; }
         .mr-1 { margin-right: 1rem }
+        .mb-1 { margin-bottom:  1rem }
         [v-cloak] { display: none }
     </style>
 </head>
