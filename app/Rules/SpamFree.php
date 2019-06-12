@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Inspections\Spam;
+use Illuminate\Contracts\Validation\Rule;
 
 class SpamFree implements Rule
 {

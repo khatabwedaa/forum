@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Events\ThreadReceivedNewReply;
+use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
