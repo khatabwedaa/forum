@@ -22,6 +22,21 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function new_user_must_first_confirm_their_email_address_before_creating_threads()
+    {
+        $user = create('App\User' , ['email_verified_at' => null]);
+
+        $this->signIn($user);
+
+        $this->get('/threads/create')->assertRedirect('/email/verify');
+
+        $thread = make('App\Thread');
+    
+        $this->post(route('threads.store') , $thread->toArray())
+            ->assertRedirect('/email/verify');
+    }
+
+    /** @test */
     public function authenticated_user_can_create_new_forum_threads()
     {
         $this->signIn(); 
@@ -61,15 +76,6 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
-    public function PublishThread($overrides = [])
-    {
-        $this->withExceptionHandling()->signIn();
-
-        $thread = make('App\Thread' , $overrides);
-    
-        return $this->post(route('threads.store') , $thread->toArray());
-    }
-
     /** @test */
     public function unauthorized_users_may_not_delete_threads()
     {
@@ -107,5 +113,14 @@ class CreateThreadsTest extends TestCase
             'subject_id' => $reply->id,
             'subject_type' => get_class($reply)
         ]);
+    }
+
+    protected function PublishThread($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = make('App\Thread' , $overrides);
+    
+        return $this->post(route('threads.store') , $thread->toArray());
     }
 }
