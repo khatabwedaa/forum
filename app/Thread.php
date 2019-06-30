@@ -30,7 +30,7 @@ class Thread extends Model
     
     /**
      * Fetch a path to the current thread.
-     * 
+     *
      * @return string
      */
     public function path()
@@ -40,7 +40,7 @@ class Thread extends Model
 
     /**
      * Relation with Reply
-     * 
+     *
      * @return hasMany
      */
     public function replies()
@@ -50,17 +50,17 @@ class Thread extends Model
 
     /**
      * Relation with User
-     * 
+     *
      * @return belongsTo
      */
     public function creator()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
      * Relation with Channel
-     * 
+     *
      * @return belongsTo
      */
     public function channel()
@@ -80,7 +80,7 @@ class Thread extends Model
         return $reply;
     }
 
-    public function scopeFilter($query , $filters)
+    public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
     }
@@ -109,7 +109,7 @@ class Thread extends Model
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()
-            ->where('user_id' , auth()->id())
+            ->where('user_id', auth()->id())
             ->exists();
     }
 
@@ -117,12 +117,12 @@ class Thread extends Model
     {
         $key = $user->visitedThreadCacheKey($this);
         
-        return $this->updated_at > cache($key);   
+        return $this->updated_at > cache($key);
     }
 
     public function getRouteKeyName()
     {
-        return 'slug';   
+        return 'slug';
     }
 
     public function setSlugAttribute($value)
@@ -134,5 +134,10 @@ class Thread extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
     }
 }

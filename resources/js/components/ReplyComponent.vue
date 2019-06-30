@@ -1,6 +1,6 @@
 <template>
     <div :id="'reply-'+id" class="card" style="margin-bottom:1rem;">
-        <div class="card-header">
+        <div class="card-header" :class="isBest ? 'success' : ''">
             <div class="level">
                 <div class="flex">
                     <a :href="'/profiles/'+data.owner.name" 
@@ -30,9 +30,13 @@
         </div>
 
 
-        <div class="card-header level" v-if="canUpdate"> 
-            <button class="btn btn-sm" @click="destroy"><i class="fas fa-trash" style="color:#ce2910"></i></button>
-            <button class="btn mr-1" @click="editing = true" style="color:#023689"><i class="far fa-edit"></i></button>
+        <div class="card-header level"> 
+            <div v-if="canUpdate">
+                <button class="btn btn-sm" @click="destroy"><i class="fas fa-trash" style="color:#ce2910"></i></button>
+                <button class="btn mr-1" @click="editing = true" style="color:#023689"><i class="far fa-edit"></i></button>
+            </div>
+
+            <button class="btn btn-success btn-sm ml-a" @click="markBestRely" v-show="! isBest">Best Reply?</button>
         </div>
     </div>
 </template>
@@ -50,7 +54,8 @@ import moment from 'moment';
             return {
                 editing: false,
                 id: this.data.id,
-                body: this.data.body
+                body: this.data.body,
+                isBest: false
             }
         },
 
@@ -89,7 +94,17 @@ import moment from 'moment';
                 axios.delete('/replies/' + this.data.id);
 
                 this.$emit('deleted' , this.data.id);
+            },
+
+            markBestRely() {
+                this.isBest = true;
             }
         }
     }
 </script>
+
+<style>
+.success {
+    background-color: #46da859c;
+}
+</style>
