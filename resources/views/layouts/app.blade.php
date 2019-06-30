@@ -48,6 +48,8 @@
         </main>
 
         <flash-component message="{{ session('flash') }}"></flash-component>
+        
+        @include('layouts._footer')
     </div>
 </body>
 </html>
