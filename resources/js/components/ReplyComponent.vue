@@ -31,7 +31,7 @@
 
 
         <div class="card-header level"> 
-            <div v-if="canUpdate">
+            <div v-if="authorize('updateReply', reply)">
                 <button class="btn btn-sm" @click="destroy"><i class="fas fa-trash" style="color:#ce2910"></i></button>
                 <button class="btn mr-1" @click="editing = true" style="color:#023689"><i class="far fa-edit"></i></button>
             </div>
@@ -55,7 +55,8 @@ import moment from 'moment';
                 editing: false,
                 id: this.data.id,
                 body: this.data.body,
-                isBest: false
+                isBest: false,
+                reply: this.data
             }
         },
 
@@ -63,14 +64,6 @@ import moment from 'moment';
             ago() {
                 return moment(this.data.created_at).fromNow();
             },
-
-            signedIn() {
-                return window.App.signedIn;
-            },
-
-            canUpdate() {
-                return this.authorize(user => this.data.user_id == user.id);
-            }
         },
 
         methods: {
