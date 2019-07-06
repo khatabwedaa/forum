@@ -55,7 +55,7 @@ import moment from 'moment';
                 editing: false,
                 id: this.data.id,
                 body: this.data.body,
-                isBest: false,
+                isBest: this.data.isBest,
                 reply: this.data
             }
         },
@@ -64,6 +64,12 @@ import moment from 'moment';
             ago() {
                 return moment(this.data.created_at).fromNow();
             },
+        },
+
+        created() {
+            window.events.$on('best-reply-selected', id => {
+                this.isBest = (id === this.id)
+            });
         },
 
         methods: {
@@ -90,7 +96,9 @@ import moment from 'moment';
             },
 
             markBestRely() {
-                this.isBest = true;
+                axios.post('/replies/'+ this.data.id +'/best');
+
+                window.events.$emit('best-reply-selected' , this.data.id);
             }
         }
     }
@@ -98,6 +106,6 @@ import moment from 'moment';
 
 <style>
 .success {
-    background-color: #46da859c;
+    background-color: #7af5ae80;
 }
 </style>
