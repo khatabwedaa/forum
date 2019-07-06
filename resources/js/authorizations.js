@@ -1,5 +1,8 @@
 let user = window.App.user;
 
-export function updateReply(reply) {
-    return reply.user_id === user.id;
-}
+module.exports = {
+    owns (model , prop = 'user_id') {
+        return model['user_id'] === user.id;
+    }
+};
+
