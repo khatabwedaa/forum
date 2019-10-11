@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "fzaninotto/faker": "^1.4",
         "nesbot/carbon": "^2.17"
     },
     "require-dev": {
