@@ -14,9 +14,8 @@ This is an open source forum that was built and maintained at Laracasts.com.
 Begin by cloning this repository to your machine, and installing all Composer & NPM dependencies.
 
 ```bash
-git clone git@github.com:JeffreyWay/council.git
-cd council && composer install && npm install
-php artisan council:install
+git clone git@github.com:khatabwedaa/forum.git
+cd forum && composer install && npm install
 npm run dev
 ```
 
