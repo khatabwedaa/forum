@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
 
@@ -127,7 +128,7 @@ class Thread extends Model
 
     public function setSlugAttribute($value)
     {
-        $slug = str_slug($value);
+        $slug = Str::slug($value);
 
         while (static::whereSlug($slug)->exists()) {
             $slug = "{$slug}-" . $this->id;
