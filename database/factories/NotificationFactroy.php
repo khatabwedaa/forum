@@ -12,7 +12,7 @@ $factory->define(DatabaseNotification::class, function (Faker $faker) {
         'type' => 'App\Notifications\ThreadWasUpdated',
         'notifiable_type' => 'App\User',
         'notifiable_id' => function () {
-            return auth()->id() ? : factory('App\User')->create()->id;
+            return auth()->id() ? : factory('App\User')->create();
         },
         'data' => ['foo' => 'bar']
     ];

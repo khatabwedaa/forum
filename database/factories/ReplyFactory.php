@@ -7,9 +7,9 @@ use App\Reply;
 
 $factory->define(Reply::class, function (Faker $faker) {
     return [
-        'thread_id' => factory('App\Thread')->create()->id,
+        'thread_id' => factory('App\Thread')->create(),
         
-        'user_id' =>  factory('App\User')->create()->id,
+        'user_id' =>  factory('App\User')->create(),
 
         'body' => $faker->paragraph
     ];
