@@ -1,6 +1,6 @@
 <template>
     <button :class="classes" @click="subscribe">
-        <i class="fab fa-angellist"></i> <span v-text="this.active ? 'unsubscribe' : 'subscribe' "></span>
+        <i class="fab fa-angellist"></i> <span v-text="this.active ? 'unsubscribe' : 'subscribe'"></span>
     </button>
 </template>
 
