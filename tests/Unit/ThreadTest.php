@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Notifications\ThreadWasUpdated;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadTest extends TestCase
 {
@@ -24,20 +25,21 @@ class ThreadTest extends TestCase
         $thread = create('App\Thread');
 
         $this->assertEquals(
-            "/threads/{$thread->channel->slug}/{$thread->slug}" , $thread->path()
+            "/threads/{$thread->channel->slug}/{$thread->slug}",
+            $thread->path()
         );
     }
 
     /** @test */
     public function a_thread_has_creator()
     {
-        $this->assertInstanceOf('App\User' , $this->thread->creator);
+        $this->assertInstanceOf('App\User', $this->thread->creator);
     }
 
     /** @test */
     public function a_thread_has_replies()
     {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection' , $this->thread->replies);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
 
     /** @test */
@@ -46,9 +48,9 @@ class ThreadTest extends TestCase
         $this->thread->addReply([
             'body' => 'Foobar',
             'user_id' => 1
-        ]); 
+        ]);
 
-        $this->assertCount(1 , $this->thread->replies);
+        $this->assertCount(1, $this->thread->replies);
     }
 
     /** @test */
@@ -62,9 +64,9 @@ class ThreadTest extends TestCase
             ->addReply([
                 'body' => 'Foobar',
                 'user_id' => 556
-            ]); 
+            ]);
 
-        Notification::assertSentTo(auth()->user() , ThreadWasUpdated::class);
+        Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
     }
 
     /** @test */
@@ -72,7 +74,7 @@ class ThreadTest extends TestCase
     {
         $thread = make('App\Thread');
 
-        $this->assertInstanceOf('App\Channel' , $thread->channel);
+        $this->assertInstanceOf('App\Channel', $thread->channel);
     }
 
     /** @test */
@@ -84,7 +86,7 @@ class ThreadTest extends TestCase
 
         $thread->subscribe($userId = 1);
 
-        $this->assertEquals(1 , $thread->subscriptions()->where('user_id' , $userId)->count());
+        $this->assertEquals(1, $thread->subscriptions()->where('user_id', $userId)->count());
     }
 
     /** @test */
@@ -96,8 +98,7 @@ class ThreadTest extends TestCase
 
         $thread->unsubscribe($userId);
 
-        $this->assertCount(0 , $thread->subscriptions);
-
+        $this->assertCount(0, $thread->subscriptions);
     }
 
     /** @test */
@@ -121,14 +122,30 @@ class ThreadTest extends TestCase
 
         $thread = create('App\Thread');
 
-        tap(auth()->user() , function ($user) use ($thread) {
+        tap(auth()->user(), function ($user) use ($thread) {
             $this->assertTrue($thread->hasUpdatesFor($user));
 
             $user->read($thread);
     
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
+    }
 
-      
+    /** @test */
+    public function a_thread_records_each_vivit()
+    {
+        $thread = make('App\Thread', ['id' => 1]);
+
+        $thread->resetVisits();
+
+        $this->assertSame(0, $thread->visits());
+        
+        $thread->recordVisit();
+
+        $this->assertEquals(1, $thread->visits());
+
+        $thread->recordVisit();
+        
+        $this->assertEquals(2, $thread->visits());
     }
 }

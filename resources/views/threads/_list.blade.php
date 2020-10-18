@@ -28,6 +28,10 @@
         <div class="card-body">
             <p>{{ $thread->body }}</p>
         </div>
+
+        <div class="card-header">
+            {{ $thread->visits() }} Visits
+        </div>
     </div>
 @empty
     <div class="card" style="margin-bottom:1rem;">
