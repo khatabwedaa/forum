@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use RecordsActivity, RecordVisits;
+    use RecordsActivity;
     
     protected $guarded = [];
 
@@ -140,5 +140,10 @@ class Thread extends Model
     public function markBestReply(Reply $reply)
     {
         $this->update(['best_reply_id' => $reply->id]);
+    }
+
+    public function visits()
+    {
+       return new Visits($this);
     }
 }

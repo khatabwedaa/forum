@@ -30,7 +30,7 @@
         </div>
 
         <div class="card-header">
-            {{ $thread->visits() }} Visits
+            {{ $thread->visits()->count() }} Visits
         </div>
     </div>
 @empty
