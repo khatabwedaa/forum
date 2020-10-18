@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Channel;
+use App\Trending;
 use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
@@ -13,8 +14,8 @@ class ThreadsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index' , 'show');
-        $this->middleware('verified')->only('create' , 'store');
+        $this->middleware('auth')->except('index', 'show');
+        $this->middleware('verified')->only('create', 'store');
     }
 
     /**
@@ -22,17 +23,21 @@ class ThreadsController extends Controller
      *
      * @param Channel $channel
      * @param ThreadFilters $filters
+     * @param Trending $trending
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel , ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
-        $threads = $this->getThreads($channel , $filters);
+        $threads = $this->getThreads($channel, $filters);
 
         if (request()->wantsJson()) {
             return $threads;
         }
 
-        return view('threads.index' , compact('threads'));
+        return view('threads.index', [
+            'threads' => $threads,
+            'trending' => $trending->get(),
+        ]);
     }
 
     /**
@@ -66,11 +71,11 @@ class ThreadsController extends Controller
         ]);
 
         if (request()->wantsJson()) {
-            return response($thread , 201);
+            return response($thread, 201);
         }
 
         return redirect($thread->path())
-            ->with('flash' , 'Your thread has been published!');
+            ->with('flash', 'Your thread has been published!');
     }
 
     /**
@@ -78,15 +83,18 @@ class ThreadsController extends Controller
      *
      * @param  $channel_id
      * @param  \App\Thread  $thread
+     * @param  \App\Trending  $trending
      * @return \Illuminate\Http\Response
      */
-    public function show($channel , Thread $thread)
+    public function show($channel, Thread $thread, Trending $trending)
     {
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
 
-        return view('threads.show' , compact('thread'));
+        $trending->push($thread);
+
+        return view('threads.show', compact('thread'));
     }
 
     /**
@@ -96,14 +104,14 @@ class ThreadsController extends Controller
      * @param  $channel
      * @return mixed
      */
-    public function destroy($channel , Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        $this->authorize('update' , $thread);
+        $this->authorize('update', $thread);
         
         $thread->delete();
 
-        if(request()->wantsJson()) {
-            return response([] , 204);
+        if (request()->wantsJson()) {
+            return response([], 204);
         }
 
         return redirect('/threads');
@@ -114,15 +122,15 @@ class ThreadsController extends Controller
      *
      * @param $channel
      * @param $filters
-     * 
+     *
      * @return $threads
      */
-    protected function getThreads($channel , $filters)
+    protected function getThreads($channel, $filters)
     {
         $threads = Thread::latest()->filter($filters);
 
         if ($channel->exists) {
-            $threads->where('channel_id' , $channel->id);
+            $threads->where('channel_id', $channel->id);
         }
 
         return $threads->paginate(25);
