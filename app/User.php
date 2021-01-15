@@ -40,7 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Relation with Thread
-     * 
+     *
      * @return hasMany
      */
     public function Threads()
@@ -55,15 +55,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function activity()
     {
-        return $this->hasMany(Activity::class);  
+        return $this->hasMany(Activity::class);
     }
 
     public function read($thread)
     {
         cache()->forever(
-            $this->visitedThreadCacheKey($thread) , 
+            $this->visitedThreadCacheKey($thread),
             Carbon::now()
         );
+    }
+
+    public function isAdmin()
+    {
+        return in_array($this->name, ['janeDoe', 'johnDoe', 'khatabWedaa']);
     }
 
     /**
@@ -86,6 +91,6 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function visitedThreadCacheKey($thread)
     {
-        return sprintf("user.%s.visits.%s" , $this->id , $thread->id);
+        return sprintf("user.%s.visits.%s", $this->id, $thread->id);
     }
 }

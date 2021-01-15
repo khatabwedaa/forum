@@ -22,7 +22,7 @@ class RepliesController extends Controller
      * @param  int $channelId
      * @param  Thread $thread
      */
-    public function index($channelId , Thread $thread)
+    public function index($channelId, Thread $thread)
     {
         return $thread->replies()->paginate(15);
     }
@@ -35,8 +35,12 @@ class RepliesController extends Controller
      * @param CreatePostRequest $form
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function store($channel_id , Thread $thread , CreatePostRequest $form)
+    public function store($channel_id, Thread $thread, CreatePostRequest $form)
     {
+        if ($thread->locked) {
+            return response('Thread is Locked', 422);
+        }
+        
         return $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
@@ -50,9 +54,9 @@ class RepliesController extends Controller
      */
     public function update(Reply $reply)
     {
-        $this->authorize('update' , $reply);
+        $this->authorize('update', $reply);
 
-        request()->validate(['body' => 'required|spamfree']);            
+        request()->validate(['body' => 'required|spamfree']);
 
         $reply->update(request(['body']));
     }
@@ -65,7 +69,7 @@ class RepliesController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        $this->authorize('update' , $reply);
+        $this->authorize('update', $reply);
         
         $reply->delete();
 

@@ -16,6 +16,10 @@ class Thread extends Model
 
     protected $appends = ['isSubscribedTo'];
 
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -80,7 +84,7 @@ class Thread extends Model
 
         return $reply;
     }
-
+    
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
@@ -144,6 +148,6 @@ class Thread extends Model
 
     public function visits()
     {
-       return new Visits($this);
+        return new Visits($this);
     }
 }

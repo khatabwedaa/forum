@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<thread-component :ini-replies-count="{{ $thread->replies_count }}" inline-template>
+<thread-component :thread="{{ $thread }}" inline-template>
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -26,7 +26,7 @@
 
                                     <button class="btn btn-sm" style="color:#ce2910"><i class="fas fa-trash"></i></button>
                                 </form>
-                            @endcan                      
+                            @endcan
                         </div>
                     </div>
                     
@@ -50,8 +50,10 @@
                         @auth
                             <p>
                                 <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+
+                                <button class="btn btn-primary" v-if="authorize('isAdmin')" @click="toggleLock" v-text="locked ? 'Unlock' : 'Lock'"></button>
                             </p> 
-                        @endauth         
+                        @endauth
                     </div>
                 </div>
             </div>
