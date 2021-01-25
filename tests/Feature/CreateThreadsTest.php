@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Thread;
 
 class CreateThreadsTest extends TestCase
 {
@@ -15,17 +14,17 @@ class CreateThreadsTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->get('/threads/create')    
+        $this->get('/threads/create')
             ->assertRedirect('/login');
 
         $this->post(route('threads.store'))
-                ->assertRedirect('/login');
+            ->assertRedirect('/login');
     }
 
     /** @test */
     public function new_user_must_first_confirm_their_email_address_before_creating_threads()
     {
-        $user = create('App\User' , ['email_verified_at' => null]);
+        $user = create('App\User', ['email_verified_at' => null]);
 
         $this->signIn($user);
 
@@ -33,22 +32,22 @@ class CreateThreadsTest extends TestCase
 
         $thread = make('App\Thread');
     
-        $this->post(route('threads.store') , $thread->toArray())
+        $this->post(route('threads.store'), $thread->toArray())
             ->assertRedirect('/email/verify');
     }
 
     /** @test */
     public function authenticated_user_can_create_new_forum_threads()
     {
-        $this->signIn(); 
+        $this->signIn();
 
-       $thread = make('App\Thread');
+        $thread = make('App\Thread');
 
-       $responce = $this->post(route('threads.store') , $thread->toArray());
+        $responce = $this->post(route('threads.store'), $thread->toArray());
 
         $this->get($responce->headers->get('Location'))
             ->assertSee($thread->title)
-                ->assertSee($thread->body);
+            ->assertSee($thread->body);
     }
 
     /** @test */
@@ -68,7 +67,7 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function thread_requires_valid_channel()
     {
-        factory('App\Channel' , 2)->create();
+        factory('App\Channel', 2)->create();
 
         $this->PublishThread(['channel_id' => null])
             ->assertSessionHasErrors('channel_id');
@@ -82,13 +81,13 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread' , ['title' => 'Foo title']);
+        $thread = create('App\Thread', ['title' => 'Foo title']);
 
         $this->assertEquals($thread->fresh()->slug, 'foo-title');
 
-        $thread = $this->postJson(route('threads.store') , $thread->toArray())->json();
+        $thread = $this->postJson(route('threads.store'), $thread->toArray())->json();
 
-        $this->assertEquals("foo-title-{$thread['id']}" , $thread['slug']);
+        $this->assertEquals("foo-title-{$thread['id']}", $thread['slug']);
     }
 
     /** @test */
@@ -96,11 +95,11 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread' , ['title' => 'some title 24']);
+        $thread = create('App\Thread', ['title' => 'some title 24']);
 
-        $thread = $this->postJson(route('threads.store') , $thread->toArray())->json();
+        $thread = $this->postJson(route('threads.store'), $thread->toArray())->json();
 
-        $this->assertEquals("some-title-24-{$thread['id']}" , $thread['slug']);
+        $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);
     }
 
     /** @test */
@@ -121,24 +120,24 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread' , ['user_id' => auth()->id()]);
-        $reply = create('App\Reply' , ['thread_id' => $thread->id]);
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
-        $responce = $this->json('DELETE' , $thread->path());
+        $responce = $this->json('DELETE', $thread->path());
 
         $responce->assertStatus(204);
 
-        $this->assertDatabaseMissing('threads' , ['id' => $thread->id]);
-        $this->assertDatabaseMissing('replies' , ['id' => $reply->id]);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
 
-        $this->assertDatabaseMissing('activities' , [
+        $this->assertDatabaseMissing('activities', [
             'subject_id' => $thread->id,
-            'subject_type' => get_class($thread)
+            'subject_type' => get_class($thread),
         ]);
 
-        $this->assertDatabaseMissing('activities' , [
+        $this->assertDatabaseMissing('activities', [
             'subject_id' => $reply->id,
-            'subject_type' => get_class($reply)
+            'subject_type' => get_class($reply),
         ]);
     }
 
@@ -146,8 +145,8 @@ class CreateThreadsTest extends TestCase
     {
         $this->withExceptionHandling()->signIn();
 
-        $thread = make('App\Thread' , $overrides);
+        $thread = make('App\Thread', $overrides);
     
-        return $this->post(route('threads.store') , $thread->toArray());
+        return $this->post(route('threads.store'), $thread->toArray());
     }
 }

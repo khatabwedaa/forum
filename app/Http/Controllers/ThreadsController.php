@@ -58,16 +58,16 @@ class ThreadsController extends Controller
      */
     public function store()
     {
-        request()->validate(array(
+        request()->validate([
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id',
-        ));
+        ]);
 
         $thread = auth()->user()->addThread([
             'channel_id' => request('channel_id'),
             'title' => request('title'),
-            'body' => request('body')
+            'body' => request('body'),
         ]);
 
         if (request()->wantsJson()) {
@@ -97,6 +97,25 @@ class ThreadsController extends Controller
         $thread->visits()->record();
 
         return view('threads.show', compact('thread'));
+    }
+
+    public function update($channel, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+
+        $data = request()->validate([
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree',
+        ]);
+
+        $thread->update($data);
+
+        if (request()->wantsJson()) {
+            return response($thread, 201);
+        }
+
+        return redirect($thread->path())
+            ->with('flash', 'Your thread has been Updated!');
     }
 
     /**

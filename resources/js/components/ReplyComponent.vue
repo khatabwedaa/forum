@@ -78,14 +78,13 @@ import moment from 'moment';
                     body: this.body
                 }) 
                 .catch(error => {
-                    flash(error.response.data , 'danger');              
+                    flash(error.response.data , 'danger');
                 })
                 .then(
                     flash('Your reply Updated.')
                 );
 
                 this.editing = false;
-
             },
 
             destroy() {
